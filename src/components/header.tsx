@@ -7,6 +7,11 @@ import Link from 'next/link';
 
 const items: MenuProps['items'] = [
     {
+        label: <Link href={"/login"}>Login</Link>,
+        key: 'login',
+        icon: <MailOutlined />,
+    },
+    {
         label: <Link href={"/"}>Home Page</Link>,
         key: 'homepage',
         icon: <MailOutlined />,
