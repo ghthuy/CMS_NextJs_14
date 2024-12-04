@@ -1,0 +1,22 @@
+/* styles/utilities/_themes.scss */
+
+$light-theme: (
+  primary: #0070f3,
+  secondary: #005bb5,
+  background: #f4f4f4,
+  text: #333,
+);
+
+$dark-theme: (
+  primary: #0a84ff,
+  secondary: #0052cc,
+  background: #121212,
+  text: #eaeaea,
+);
+
+@mixin theme($theme-map) {
+  --primary-color: map.get($theme-map, primary);
+  --secondary-color: map.get($theme-map, secondary);
+  --background-color: map.get($theme-map, background);
+  --text-color: map.get($theme-map, text);
+}

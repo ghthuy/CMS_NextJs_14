@@ -3,8 +3,8 @@
   "description": "hot nextjs topic for youtube",
   "version": "0.1.0",
   "author": {
-    "name": "Hỏi Dân IT",
-    "url": "https://hoidanit.com.vn"
+    "name": "Thanh Thuy",
+    "url": "https://github.com/nghitue"
   },
   "private": true,
   "scripts": {
@@ -17,8 +17,10 @@
     "@ant-design/cssinjs": "1.17.2",
     "antd": "5.11.2",
     "next": "14.0.3",
+    "normalize.css": "^8.0.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "sass": "^1.82.0"
   },
   "devDependencies": {
     "@types/node": "20.9.2",
