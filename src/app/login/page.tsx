@@ -1,13 +1,66 @@
 'use client'
 import { Button, Form, Input } from 'antd';
-import '@/styles/pages/Login.scss';
+import { useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation'
+
+import { LoginBody, LoginBodyType } from '@/schemaValidations/auth.schema'
+import authApiRequest from '@/apiRequests/auth'
+import { getDeviceId, getDeviceInfo } from '@/lib/utils'
+import { useToast } from '@/components/ui/use-toast'
+import { handleErrorApi } from '@/lib/utils'
+
+import '@/styles/pages/Login.scss';
 
 const LoginPage = () => {
     const [form] = Form.useForm();
+    const [loading, setLoading] = useState(false);
+    const { toast } = useToast();
+  const router = useRouter()
 
-    const onFinish = (values) => {
-        console.log('Form values:', values);
+
+    // const form = useForm<LoginBodyType>({
+    //     resolver: zodResolver(LoginBody),
+    //     defaultValues: {
+    //       email: '',
+    //       password: ''
+    //     }
+    //   })
+
+    const onFinish = async (values: LoginBodyType) => {
+        if (loading) return
+        setLoading(true)
+        try {
+            const deviceInfo = getDeviceInfo();
+            const loginPayload = {
+                ...values,
+                deviceId: getDeviceId(),
+                deviceName: `${deviceInfo?.browser} ${deviceInfo?.deviceName} ${deviceInfo?.deviceType} ${deviceInfo?.os}`,
+            };
+            const result = await authApiRequest.login(loginPayload)
+            console.log("result", result);
+            // await authApiRequest.auth({
+            //     sessionToken: result.payload?.result?.access_token,
+            //     expiresAt: result.payload?.result?.expires
+            // })
+
+            toast({
+                description: "Đăng nhập thành công"
+            })
+
+            // setUser(result.payload.data.account)
+            router.push('/')
+            router.refresh()
+            
+        } catch (error: any) {
+            handleErrorApi({
+                error,
+                setError: form.setError
+              })
+
+        } finally {
+            setLoading(false)
+        }
     };
 
     return (

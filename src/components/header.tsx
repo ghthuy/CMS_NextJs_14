@@ -31,7 +31,7 @@ const items: MenuProps['items'] = [
 ];
 
 const Header: React.FC = () => {
-    const [current, setCurrent] = useState('homepage');
+    const [current, setCurrent] = useState('login');
 
     const onClick: MenuProps['onClick'] = (e) => {
         console.log('click ', e);
