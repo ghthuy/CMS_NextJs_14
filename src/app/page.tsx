@@ -15,10 +15,7 @@ export default function Home() {
           <input name="username" type="text" />
           <button type="submit"> Save</button>
         </form>
-
       </div>
-
     </>
-
   )
 }

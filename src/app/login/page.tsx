@@ -11,12 +11,15 @@ import { useToast } from '@/components/ui/use-toast'
 import { handleErrorApi } from '@/lib/utils'
 
 import '@/styles/pages/Login.scss';
+import { useAppContext } from '../app-provider';
 
 const LoginPage = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const { toast } = useToast();
-  const router = useRouter()
+    const router = useRouter();
+    // const { setUser } = useAppContext()
+    const { setUser } = useAppContext();
 
 
     // const form = useForm<LoginBodyType>({
@@ -38,17 +41,19 @@ const LoginPage = () => {
                 deviceName: `${deviceInfo?.browser} ${deviceInfo?.deviceName} ${deviceInfo?.deviceType} ${deviceInfo?.os}`,
             };
             const result = await authApiRequest.login(loginPayload)
-            console.log("result", result);
-            // await authApiRequest.auth({
-            //     sessionToken: result.payload?.result?.access_token,
-            //     expiresAt: result.payload?.result?.expires
-            // })
-
-            toast({
-                description: "Đăng nhập thành công"
+           
+            await authApiRequest.auth({
+                sessionToken: result.payload?.result?.access_token,
+                expiresAt: result.payload?.result?.expires
             })
 
-            // setUser(result.payload.data.account)
+            console.log("chay den day");
+
+            toast({
+                description: "Đăng nhập thành công" // Hien tai k chay
+            })
+
+            setUser(result.payload.data.account)
             router.push('/')
             router.refresh()
             
