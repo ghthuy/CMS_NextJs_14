@@ -41,27 +41,30 @@ const LoginPage = () => {
                 deviceName: `${deviceInfo?.browser} ${deviceInfo?.deviceName} ${deviceInfo?.deviceType} ${deviceInfo?.os}`,
             };
             const result = await authApiRequest.login(loginPayload)
-           
+
             await authApiRequest.auth({
                 sessionToken: result.payload?.result?.access_token,
                 expiresAt: result.payload?.result?.expires
             })
 
-            console.log("chay den day");
+
 
             toast({
                 description: "Đăng nhập thành công" // Hien tai k chay
             })
 
-            setUser(result.payload.data.account)
+            console.log("chay den day", result.payload?.result?.access_token);
+
+            setUser(result.payload?.result?.access_token);
+
             router.push('/')
             router.refresh()
-            
+
         } catch (error: any) {
             handleErrorApi({
                 error,
                 setError: form.setError
-              })
+            })
 
         } finally {
             setLoading(false)

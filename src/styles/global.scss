@@ -33,3 +33,14 @@ body.dark {
   padding: 10px 14px !important;
   height: 44px;
 }
+
+main{
+  display: grid;
+  grid-template-columns: 312px auto;
+}
+
+header{
+  padding: 14px 32px;
+  box-shadow: 0px 4px 8px 0px #0000000D;
+
+}
