@@ -4,6 +4,7 @@
 
 body {
   color: $text-color;
+  overflow-y: hidden;
 }
 
 body.light {
@@ -34,13 +35,56 @@ body.dark {
   height: 44px;
 }
 
-main{
+main.root-page {
   display: grid;
   grid-template-columns: 312px auto;
 }
 
-header{
+header {
   padding: 14px 32px;
-  box-shadow: 0px 4px 8px 0px #0000000D;
-
+  box-shadow: 0px 4px 8px 0px #0000000d;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .profile-box {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+  }
 }
+
+.icon-custom {
+  color: $secondary-color;
+  font-size: 24px;
+}
+
+.icon-search {
+  font-size: 20px;
+  color: $secondary-color;
+}
+
+.logo-box {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 24px;
+  .text {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    span {
+      font-size: 24px;
+      font-weight: 600;
+    }
+  }
+}
+
+main {
+  height: calc(100vh - 76px);
+}
+
+
+
+

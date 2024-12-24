@@ -1,0 +1,18 @@
+@use "../utilities/variables" as *;
+
+.search-input {
+  min-width: 551px !important;
+  border-radius: 99px !important;
+  height: 48px !important;
+  background: #f2f4f7 !important;
+  padding: 12px 14px !important;
+  input {
+    background: #f2f4f7 !important;
+    &::placeholder {
+      font-size: 16px !important;
+    }
+  }
+  .ant-input-prefix {
+    margin-inline-end: 24px !important;
+  }
+}

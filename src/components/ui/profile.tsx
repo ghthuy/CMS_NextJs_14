@@ -1,10 +1,23 @@
-'use client'
+'use client';
 import React from 'react';
-import { UserOutlined } from '@ant-design/icons';
-import { Avatar, Space } from 'antd';
+import { Avatar } from 'antd';
+import '@/styles/components/Profile.scss';
 
-const Profile: React.FC = () => {
-    return <Avatar size={64} icon={<UserOutlined />} />;
+interface ProfileProps {
+    title: string;
+    description: string;
+    avatarProps: React.ComponentProps<typeof Avatar>; // Props for Avatar component
+    type: string;
+}
+
+const Profile: React.FC<ProfileProps> = ({ title, description, avatarProps, type = "vertical" }) => {
+    return (
+        <div className={`profile-wrapper ${type}`}>
+            <Avatar {...avatarProps} />
+            <h3>{title}</h3>
+            {type == "vertical" ? <p>{description}</p> : <></>}
+        </div>
+    );
 };
 
 export default Profile;

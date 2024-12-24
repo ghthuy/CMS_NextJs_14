@@ -1,30 +1,40 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-const privatePaths = ['/me', '/users', '/blogs']
-const authPaths = ['/login', '/register']
-
-const productEditRegex = /^\/products\/\d+\/edit$/
-
-// This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
-  const sessionToken = request.cookies.get('sessionToken')?.value
-  // Chưa đăng nhập thì không cho vào private paths
-  if (privatePaths.some((path) => pathname.startsWith(path)) && !sessionToken) {
-    return NextResponse.redirect(new URL('/login', request.url))
+  const { pathname } = request.nextUrl;
+  const sessionToken = request.cookies.get("sessionToken")?.value;
+
+  // Bypass requests for static files and assets
+  if (
+    pathname.startsWith("/_next") || // Next.js internal files
+    pathname.startsWith("/api") || // API routes
+    pathname.startsWith("/static") || // Static assets
+    pathname.match(/\.(jpg|jpeg|png|gif|svg|ico|webp|avif|tiff|bmp)$/i) // Image files
+  ) {
+    return NextResponse.next();
   }
-  // Đăng nhập rồi thì không cho vào login/register nữa
-  if (authPaths.some((path) => pathname.startsWith(path)) && sessionToken) {
-    return NextResponse.redirect(new URL('/me', request.url))
+
+  // If no session token, allow only login and register pages
+  if (
+    !sessionToken ||
+    sessionToken === "undefined" ||
+    sessionToken === "null"
+  ) {
+    if (pathname !== "/login" && pathname !== "/register") {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
   }
-  if (pathname.match(productEditRegex) && !sessionToken) {
-    return NextResponse.redirect(new URL('/login', request.url))
+
+  // Redirect authenticated users away from login and register
+  if (sessionToken && (pathname === "/login" || pathname === "/register")) {
+    return NextResponse.redirect(new URL("/", request.url));
   }
-  return NextResponse.next()
+
+  // Allow all other authenticated paths
+  return NextResponse.next();
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/me', '/login', '/register', '/products/:path*', '/', '/users', '/blogs']
-}
+  matcher: ["/:path*"], // Apply middleware to all paths
+};

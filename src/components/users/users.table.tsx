@@ -115,8 +115,6 @@ const UsersTable = (props: IProps) => {
         }
     };
 
-    console.log("users", users?.items);
-
     return (
         <div>
             <Table

@@ -1,0 +1,26 @@
+@use "../utilities/variables" as *;
+
+.profile-wrapper {
+  display: inline-flex;
+  &.vertical {
+    flex-direction: column;
+    text-align: center;
+    span {
+      margin: 0 auto 12px;
+    }
+  }
+  h3 {
+    font-size: 16px;
+  }
+  p {
+    font-size: 12px;
+  }
+  &.horizontal {
+    gap: 8px;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 18px;
+    border: 1px solid #eaecf0;
+    border-radius: 8px;
+  }
+}

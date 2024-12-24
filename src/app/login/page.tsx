@@ -1,26 +1,25 @@
 'use client'
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import { useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
-import { LoginBody, LoginBodyType } from '@/schemaValidations/auth.schema'
-import authApiRequest from '@/apiRequests/auth'
-import { getDeviceId, getDeviceInfo } from '@/lib/utils'
-import { useToast } from '@/components/ui/use-toast'
-import { handleErrorApi } from '@/lib/utils'
+import { LoginBody, LoginBodyType } from '@/schemaValidations/auth.schema';
+import authApiRequest from '@/apiRequests/auth';
+import accountApiRequest from '@/apiRequests/account';
+import { getDeviceId, getDeviceInfo } from '@/lib/utils';
+import { handleErrorApi } from '@/lib/utils';
+
 
 import '@/styles/pages/Login.scss';
-import { useAppContext } from '../app-provider';
+import { useAppContext } from "@/app/app-provider";
 
 const LoginPage = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
-    const { toast } = useToast();
     const router = useRouter();
-    // const { setUser } = useAppContext()
     const { setUser } = useAppContext();
-
+    const [messageApi, contextHolder] = message.useMessage();
 
     // const form = useForm<LoginBodyType>({
     //     resolver: zodResolver(LoginBody),
@@ -41,23 +40,18 @@ const LoginPage = () => {
                 deviceName: `${deviceInfo?.browser} ${deviceInfo?.deviceName} ${deviceInfo?.deviceType} ${deviceInfo?.os}`,
             };
             const result = await authApiRequest.login(loginPayload)
-
             await authApiRequest.auth({
                 sessionToken: result.payload?.result?.access_token,
                 expiresAt: result.payload?.result?.expires
             })
-
-
-
-            toast({
-                description: "Đăng nhập thành công" // Hien tai k chay
-            })
-
-            console.log("chay den day", result.payload?.result?.access_token);
-
+            messageApi.open({
+                type: 'success',
+                content: 'Đăng nhập thành công',
+            });
             setUser(result.payload?.result?.access_token);
-
-            router.push('/')
+            const profile = await accountApiRequest.me(result.payload?.result?.access_token ?? '');
+            console.log("profile", profile);
+            router.push('/overview')
             router.refresh()
 
         } catch (error: any) {
@@ -70,9 +64,9 @@ const LoginPage = () => {
             setLoading(false)
         }
     };
-
     return (
         <div className='login-page'>
+            {contextHolder}
             <div className='login-page--ins'>
                 <div className='form-wrapper'>
                     <figure>
@@ -115,7 +109,7 @@ const LoginPage = () => {
                             <Input.Password placeholder="••••••••" className="h-12" />
                         </Form.Item>
                         <Form.Item>
-                            <Button type="primary" htmlType="submit">
+                            <Button type="primary" htmlType="submit" loading={loading}>
                                 Sign in
                             </Button>
                         </Form.Item>

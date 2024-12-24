@@ -1,0 +1,47 @@
+@use "../utilities/variables" as *;
+
+#aside {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border-right: 1px solid $border-color;
+  .profile-wrapper {
+    margin-bottom: 16px;
+  }
+  ul.ant-menu {
+    border-inline-end: none !important;
+    height: calc(100vh - 284px);
+    overflow-y: auto;
+    li {
+      font-size: 16px;
+      padding: 8px 12px !important;
+    }
+  }
+
+  /* Apply to the whole page or a specific container */
+  ul.ant-menu {
+    scrollbar-width: thin; /* Thin scrollbar for Firefox */
+    scrollbar-color: #cccccc #f5f5f5; /* Thumb and track colors for Firefox */
+  }
+
+  /* Chrome, Edge, and Safari */
+  ul.ant-menu::-webkit-scrollbar {
+    width: 8px; /* Thinner scrollbar */
+  }
+
+  ul.ant-menu::-webkit-scrollbar-track {
+    background: #f5f5f5; /* Light gray track background */
+    border-radius: 10px; /* Rounded track edges */
+  }
+
+  ul.ant-menu::-webkit-scrollbar-thumb {
+    background: #cccccc; /* Medium gray thumb */
+    border-radius: 10px; /* Rounded thumb edges */
+  }
+
+  ul.ant-menu::-webkit-scrollbar-thumb:hover {
+    background: #707070; /* Slightly darker gray on hover */
+  }
+}

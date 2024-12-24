@@ -1,0 +1,60 @@
+@use "../utilities/variables" as *;
+
+.overview-wrapper {
+  margin: 50px 32px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  .col {
+    border: 1px solid $border-color;
+    padding: 32px 24px;
+    border-radius: 12px;
+    ul {
+      border-top: 1px solid $border-color;
+      padding: 10px 0;
+      li {
+        padding: 8px 0;
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        span {
+          background: #f2f4f7;
+          padding: 5px;
+          display: inline-block;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          line-height: 1;
+          border-radius: 4px;
+        }
+      }
+    }
+    &:first-child {
+      ul {
+        border-bottom: 1px solid $border-color;
+      }
+    }
+    h4 {
+      text-align: right;
+      padding: 8px 0;
+      font-size: 14px;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+  }
+  button {
+    margin-top: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    text-align: center;
+    padding: 8px 16px;
+    border-radius: 99px;
+    border: none;
+    cursor: pointer;
+  }
+}
